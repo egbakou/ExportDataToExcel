@@ -4,6 +4,8 @@ using DocumentFormat.OpenXml.Spreadsheet;
 using ExportDataToExcel.Interfaces;
 using ExportDataToExcel.Models;
 using ExportDataToExcel.Services;
+using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -21,7 +23,7 @@ namespace ExportDataToExcel.ViewModels
         {
             Title = "Xamarin Developpers";
             LoadData();
-            ExportToExcelCommand = new Command(ExportDataToExcelAsync);
+            ExportToExcelCommand = new Command(async () => await ExportDataToExcelAsync());
         }
 
         /* Get Xamarin developpers list from Service*/
@@ -32,8 +34,17 @@ namespace ExportDataToExcel.ViewModels
 
 
         /* Export the liste to excel file at the location*/
-        public void ExportDataToExcelAsync()
+        public async System.Threading.Tasks.Task ExportDataToExcelAsync()
         {
+            // Granted storage permission
+            var storageStatus = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Storage);
+
+            if (storageStatus != PermissionStatus.Granted)
+            {
+                var results = await CrossPermissions.Current.RequestPermissionsAsync(new[] { Permission.Storage });
+                storageStatus = results[Permission.Storage];
+            }
+
             if (Developpers.Count() > 0)
             {
                 try
@@ -41,9 +52,9 @@ namespace ExportDataToExcel.ViewModels
                     string date = DateTime.Now.ToShortDateString();
                     date = date.Replace("/", "_");
 
-                    FilePath = DependencyService.Get<IExportFilesToLocation>().GetFolderLocation() + "xfDeveloppers" + date + ".xlsx";
-
-                    using (SpreadsheetDocument document = SpreadsheetDocument.Create(FilePath, SpreadsheetDocumentType.Workbook))
+                    var path = DependencyService.Get<IExportFilesToLocation>().GetFolderLocation() + "xfdeveloppers" + date + ".xlsx";
+                    FilePath = path;
+                    using (SpreadsheetDocument document = SpreadsheetDocument.Create(path, SpreadsheetDocumentType.Workbook))
                     {
                         WorkbookPart workbookPart = document.AddWorkbookPart();
                         workbookPart.Workbook = new Workbook();
@@ -52,7 +63,7 @@ namespace ExportDataToExcel.ViewModels
                         worksheetPart.Worksheet = new Worksheet();
 
                         Sheets sheets = workbookPart.Workbook.AppendChild(new Sheets());
-                        Sheet sheet = new Sheet() { Id = workbookPart.GetIdOfPart(worksheetPart), SheetId = 1, Name = "Liste des produits" };
+                        Sheet sheet = new Sheet() { Id = workbookPart.GetIdOfPart(worksheetPart), SheetId = 1, Name = "Xamarin forms developpers list" };
                         sheets.Append(sheet);
 
                         workbookPart.Workbook.Save();
