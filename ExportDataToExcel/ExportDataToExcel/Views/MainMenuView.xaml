@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ExportDataToExcel.Views.MainMenuView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="{Binding Title}">
+
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            Command="{Binding ClearResultCommand}"
+            Icon="clear.png"
+            Text="Clear" />
+        <ToolbarItem
+            Command="{Binding ShareResultCommand}"
+            Icon="share.png"
+            Text="Share" />
+    </ContentPage.ToolbarItems>
+
+
+    <ContentPage.Content />
+
+</ContentPage>
