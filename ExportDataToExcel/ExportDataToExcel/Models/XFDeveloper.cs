@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ExportDataToExcel.Models
 {
-    public class XFDevelopper
+    public class XFDeveloper
     {
         public int ID { get; set; }
         public string FullName { get; set; }

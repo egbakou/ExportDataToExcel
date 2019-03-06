@@ -29,11 +29,11 @@ namespace ExportDataToExcel.ViewModels
         /* Get Xamarin developpers list from Service*/
         private void LoadData()
         {
-            Developpers = new ObservableCollection<XFDevelopper>(XFDevelopperService.GetAllXamarinDeveloppers());
+            Developers = new ObservableCollection<XFDeveloper>(XFDeveloperService.GetAllXamarinDeveloppers());
         }
 
 
-        /* Export the liste to excel file at the location*/
+        /* Export the list to excel file at the location provide by DependencyService*/
         public async System.Threading.Tasks.Task ExportDataToExcelAsync()
         {
             // Granted storage permission
@@ -45,14 +45,14 @@ namespace ExportDataToExcel.ViewModels
                 storageStatus = results[Permission.Storage];
             }
 
-            if (Developpers.Count() > 0)
+            if (Developers.Count() > 0)
             {
                 try
                 {
                     string date = DateTime.Now.ToShortDateString();
                     date = date.Replace("/", "_");
 
-                    var path = DependencyService.Get<IExportFilesToLocation>().GetFolderLocation() + "xfdeveloppers" + date + ".xlsx";
+                    var path = DependencyService.Get<IExportFilesToLocation>().GetFolderLocation() + "XFDevelopers" + date + ".xlsx";
                     FilePath = path;
                     using (SpreadsheetDocument document = SpreadsheetDocument.Create(path, SpreadsheetDocumentType.Workbook))
                     {
@@ -82,8 +82,8 @@ namespace ExportDataToExcel.ViewModels
                         // Insert the header row to the Sheet Data
                         sheetData.AppendChild(row);
 
-                        // Inserting each product
-                        foreach (var d in Developpers)
+                        // Add each product
+                        foreach (var d in Developers)
                         {
                             row = new Row();
                             row.Append(
@@ -123,11 +123,11 @@ namespace ExportDataToExcel.ViewModels
 
         public ICommand ExportToExcelCommand { get; set; }
 
-        private ObservableCollection<XFDevelopper> _developpers;
-        public ObservableCollection<XFDevelopper> Developpers
+        private ObservableCollection<XFDeveloper> _developers;
+        public ObservableCollection<XFDeveloper> Developers
         {
-            get { return _developpers; }
-            set { SetProperty(ref _developpers, value); }
+            get { return _developers; }
+            set { SetProperty(ref _developers, value); }
         }
 
         private string _filePath;
