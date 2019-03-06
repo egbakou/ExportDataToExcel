@@ -1,5 +1,7 @@
 ## Export ListView Items to Excel File in Xamarin.Forms
 
+<img src="ExportDataToExcel/screenshots/post_img.png" />
+
 ### Lioncoding article Link
 
 [Data Export in Xamarin.Forms](https://lioncoding.com/2019/02/21/2019-02-21-concevoir-un-lecteur-de-code-barres-avec-xamarin-forms/)
@@ -50,7 +52,7 @@ using System.Text;
 
 namespace ExportDataToExcel.Models
 {
-    public class XFDevelopper
+    public class XFDeveloper
     {
         public int ID { get; set; }
         public string FullName { get; set; }
@@ -68,55 +70,55 @@ using System.Collections.Generic;
 
 namespace ExportDataToExcel.Services
 {
-    public class XFDevelopperService
+    public class XFDeveloperService
     {
-        public static List<XFDevelopper> GetAllXamarinDeveloppers()
+        public static List<XFDeveloper> GetAllXamarinDevelopers()
         {
-            List<XFDevelopper> developpers = new List<XFDevelopper>
+            List<XFDeveloper> developers = new List<XFDeveloper>
             {
-                new XFDevelopper
+                new XFDeveloper
                 {
                     ID = 1,
                     FullName = "James Montemagno",
                     Phone = "+00 0000 0001"
                 },
-                new XFDevelopper
+                new XFDeveloper
                 {
                     ID = 2,
                     FullName = "Leomaris Rayes",
                     Phone = "+00 0000 0002"
                 },
-                new XFDevelopper
+                new XFDeveloper
                 {
                     ID = 3,
                     FullName = "K. Laurent egbakou",
                     Phone = "+00 0000 0003"
                 },
-                new XFDevelopper
+                new XFDeveloper
                 {
                     ID = 4,
                     FullName = "Houssem Dellai",
                     Phone = "+00 0000 0004"
                 },
-                new XFDevelopper
+                new XFDeveloper
                 {
                     ID = 5,
                     FullName = "Yves Gaston",
                     Phone = "+00 0000 0005"
                 },
-                new XFDevelopper
+                new XFDeveloper
                 {
                     ID = 6,
                     FullName = "John Doe",
                     Phone = "+00 0000 0006"
                 },
-                new XFDevelopper
+                new XFDeveloper
                 {
                     ID = 7,
                     FullName = "Marcel Adama",
                     Phone = "+00 0000 0007"
                 },
-                new XFDevelopper
+                new XFDeveloper
                 {
                     ID = 8,
                     FullName = "Carlos Ognankotan",
@@ -124,7 +126,7 @@ namespace ExportDataToExcel.Services
                 }
             };
 
-            return developpers;
+            return developers;
         }                        
     }
 }
@@ -158,7 +160,7 @@ namespace ExportDataToExcel.Services
                 <ListView
                     CachingStrategy="RecycleElement"
                     HasUnevenRows="False"
-                    ItemsSource="{Binding Developpers}"
+                    ItemsSource="{Binding Developers}"
                     SeparatorColor="Transparent"
                     SeparatorVisibility="None">
                     <ListView.RowHeight>
@@ -310,15 +312,15 @@ namespace ExportDataToExcel.ViewModels
        
         public MainMenuViewModel()
         {
-            Title = "Xamarin Developpers";
+            Title = "Xamarin Developers";
             LoadData();
             ExportToExcelCommand = new Command(async () => await ExportDataToExcelAsync());
         }
 
-        /* Get Xamarin developpers list from Service*/
+        /* Get Xamarin developers list from Service*/
         private void LoadData()
         {
-            Developpers = new ObservableCollection<XFDevelopper>(XFDevelopperService.GetAllXamarinDeveloppers());
+            Developers = new ObservableCollection<XFDeveloper>(XFDeveloperService.GetAllXamarinDevelopers());
         }
 
 
@@ -334,14 +336,14 @@ namespace ExportDataToExcel.ViewModels
                 storageStatus = results[Permission.Storage];
             }
 
-            if (Developpers.Count() > 0)
+            if (Developers.Count() > 0)
             {
                 try
                 {
                     string date = DateTime.Now.ToShortDateString();
                     date = date.Replace("/", "_");
 
-                    var path = DependencyService.Get<IExportFilesToLocation>().GetFolderLocation() + "xfdeveloppers" + date + ".xlsx";
+                    var path = DependencyService.Get<IExportFilesToLocation>().GetFolderLocation() + "xfdevelopers" + date + ".xlsx";
                     FilePath = path;
                     using (SpreadsheetDocument document = SpreadsheetDocument.Create(path, SpreadsheetDocumentType.Workbook))
                     {
@@ -352,7 +354,7 @@ namespace ExportDataToExcel.ViewModels
                         worksheetPart.Worksheet = new Worksheet();
 
                         Sheets sheets = workbookPart.Workbook.AppendChild(new Sheets());
-                        Sheet sheet = new Sheet() { Id = workbookPart.GetIdOfPart(worksheetPart), SheetId = 1, Name = "Xamarin forms developpers list" };
+                        Sheet sheet = new Sheet() { Id = workbookPart.GetIdOfPart(worksheetPart), SheetId = 1, Name = "Xamarin forms developers list" };
                         sheets.Append(sheet);
 
                         workbookPart.Workbook.Save();
@@ -371,8 +373,8 @@ namespace ExportDataToExcel.ViewModels
                         // Insert the header row to the Sheet Data
                         sheetData.AppendChild(row);
 
-                        // Inserting each product
-                        foreach (var d in Developpers)
+                        // Add each product
+                        foreach (var d in Developers)
                         {
                             row = new Row();
                             row.Append(
@@ -412,11 +414,11 @@ namespace ExportDataToExcel.ViewModels
 
         public ICommand ExportToExcelCommand { get; set; }
 
-        private ObservableCollection<XFDevelopper> _developpers;
-        public ObservableCollection<XFDevelopper> Developpers
+        private ObservableCollection<XFDeveloper> _developers;
+        public ObservableCollection<XFDeveloper> Developers
         {
-            get { return _developpers; }
-            set { SetProperty(ref _developpers, value); }
+            get { return _developers; }
+            set { SetProperty(ref _developers, value); }
         }
 
         private string _filePath;
