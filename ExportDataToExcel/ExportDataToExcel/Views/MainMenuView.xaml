@@ -20,7 +20,7 @@
                 <ListView
                     CachingStrategy="RecycleElement"
                     HasUnevenRows="False"
-                    ItemsSource="{Binding Developpers}"
+                    ItemsSource="{Binding Developers}"
                     SeparatorColor="Transparent"
                     SeparatorVisibility="None">
                     <ListView.RowHeight>
