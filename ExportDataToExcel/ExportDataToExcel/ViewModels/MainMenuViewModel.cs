@@ -21,19 +21,19 @@ namespace ExportDataToExcel.ViewModels
        
         public MainMenuViewModel()
         {
-            Title = "Xamarin Developpers";
+            Title = "Xamarin Developers";
             LoadData();
             ExportToExcelCommand = new Command(async () => await ExportDataToExcelAsync());
         }
 
-        /* Get Xamarin developpers list from Service*/
+        /* Get Xamarin developers list from Service*/
         private void LoadData()
         {
-            Developers = new ObservableCollection<XFDeveloper>(XFDeveloperService.GetAllXamarinDeveloppers());
+            Developers = new ObservableCollection<XFDeveloper>(XFDeveloperService.GetAllXamarinDevelopers());
         }
 
 
-        /* Export the list to excel file at the location provide by DependencyService*/
+        /* Export the list to excel file at the location provide by DependencyService */
         public async System.Threading.Tasks.Task ExportDataToExcelAsync()
         {
             // Granted storage permission
@@ -63,7 +63,7 @@ namespace ExportDataToExcel.ViewModels
                         worksheetPart.Worksheet = new Worksheet();
 
                         Sheets sheets = workbookPart.Workbook.AppendChild(new Sheets());
-                        Sheet sheet = new Sheet() { Id = workbookPart.GetIdOfPart(worksheetPart), SheetId = 1, Name = "Xamarin forms developpers list" };
+                        Sheet sheet = new Sheet() { Id = workbookPart.GetIdOfPart(worksheetPart), SheetId = 1, Name = "Xamarin Forms developers list" };
                         sheets.Append(sheet);
 
                         workbookPart.Workbook.Save();

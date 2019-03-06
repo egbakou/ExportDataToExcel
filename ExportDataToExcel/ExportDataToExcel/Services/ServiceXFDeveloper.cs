@@ -5,7 +5,7 @@ namespace ExportDataToExcel.Services
 {
     public class XFDeveloperService
     {
-        public static List<XFDeveloper> GetAllXamarinDeveloppers()
+        public static List<XFDeveloper> GetAllXamarinDevelopers()
         {
             List<XFDeveloper> developpers = new List<XFDeveloper>
             {

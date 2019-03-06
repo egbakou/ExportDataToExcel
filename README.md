@@ -324,7 +324,7 @@ namespace ExportDataToExcel.ViewModels
         }
 
 
-        /* Export the liste to excel file at the location*/
+        /* Export the list to excel file at the location provide by DependencyService */
         public async System.Threading.Tasks.Task ExportDataToExcelAsync()
         {
             // Granted storage permission
@@ -354,7 +354,7 @@ namespace ExportDataToExcel.ViewModels
                         worksheetPart.Worksheet = new Worksheet();
 
                         Sheets sheets = workbookPart.Workbook.AppendChild(new Sheets());
-                        Sheet sheet = new Sheet() { Id = workbookPart.GetIdOfPart(worksheetPart), SheetId = 1, Name = "Xamarin forms developers list" };
+                        Sheet sheet = new Sheet() { Id = workbookPart.GetIdOfPart(worksheetPart), SheetId = 1, Name = "Xamarin Forms developers list" };
                         sheets.Append(sheet);
 
                         workbookPart.Workbook.Save();
