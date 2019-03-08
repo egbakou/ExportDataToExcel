@@ -4,7 +4,7 @@
 
 ### Lioncoding article Link
 
-[Data Export in Xamarin.Forms](https://lioncoding.com/2019/02/21/2019-02-21-concevoir-un-lecteur-de-code-barres-avec-xamarin-forms/)
+[Data Export in Xamarin.Forms](https://lioncoding.com/2019/03/07/2019-03-07-export-de-donnees-sous-format-excel-dans-xamarin-forms/)
 
 ### Nuget packages used
 
